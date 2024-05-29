@@ -292,6 +292,10 @@ class AMDGPUDevice(GPUDevice):
         processes_infos = [
             amdsmi.amdsmi_get_gpu_process_info(self.handle, p) for p in processes_handles
         ]
+        logger.warning([
+            {"pid": p["pid"], "used_memory": p["memory_usage"]["vram_mem"]}
+            for p in processes_infos
+        ])
         return [
             {"pid": p["pid"], "used_memory": p["memory_usage"]["vram_usage"]}
             for p in processes_infos
